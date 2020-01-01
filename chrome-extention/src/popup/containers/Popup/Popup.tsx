@@ -5,6 +5,8 @@ import { classNames } from '../../../utils/general.util';
 import Timer from '../Timer/Timer';
 import Login from './../Login/Login';
 import './Popup.scss';
+import { useStores } from '../../store/context.store';
+import { localStoreKeys } from '../../store/main.store';
 
 const theme = createMuiTheme({
     palette: {
@@ -44,33 +46,40 @@ interface AppProps { }
 
 const App: React.FC = (props: AppProps) => {
 
+    const {
+        store
+    } = useStores();
 
-    const store = useLocalStore(() => ({
+    const localStore = useLocalStore(() => ({
         isLogin: false
     }))
 
     const mainClasses = classNames('popupContainer', {
-        'with-login': !store.isLogin
+        'with-login': !localStore.isLogin
     })
 
 
     const onLogin = () => {
-        store.isLogin = !store.isLogin
+        localStore.isLogin = !localStore.isLogin
+        if (!localStore.isLogin) {
+            store.time = null;
+            localStorage.removeItem(localStoreKeys.useTimeKey);
+        }
     }
-
-
 
     return (
         <MuiThemeProvider theme={theme}>
             <div className={mainClasses} >
                 {
-                    store.isLogin ? (
+                    localStore.isLogin ? (
                         <Timer />
                     ) : (
                             <Login></Login>
                         )
                 }
-                <Button onClick={onLogin}>{!store.isLogin ? 'Login' : 'Logout'}</Button>
+                <div className="buttons-container">
+                    <Button onClick={onLogin}>{!localStore.isLogin ? 'Login' : 'Logout'}</Button>
+                </div>
             </div>
         </MuiThemeProvider>
     )

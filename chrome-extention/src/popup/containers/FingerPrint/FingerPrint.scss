@@ -2,6 +2,7 @@
 
 .finger-print-container {
   @include flex-center;
+  margin: 1rem 0;
   svg {
     cursor: pointer;
 

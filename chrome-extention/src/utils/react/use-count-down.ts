@@ -20,6 +20,7 @@ export class CountDate {
         this.setTime(this.difference);
     }
 
+
     setTime(difference: number) {
         if (difference > 0) {
             this.seconds = Math.floor(difference / 1000);
@@ -101,7 +102,6 @@ export default function useCountDown(initTime?: Date): [CountDate, (newDate?: Da
             clearInterval(timer);
         };
     }, [])
-
 
 
     return [time, setCountDownTime]

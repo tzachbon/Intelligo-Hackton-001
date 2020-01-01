@@ -3,23 +3,39 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { useLocalStorage } from '../../../utils/react/use-chrome';
 import useCountDown from '../../../utils/react/use-count-down';
+import { useStores } from '../../store/context.store';
+import { localStoreKeys } from '../../store/main.store';
+import FingerPrint from '../FingerPrint/FingerPrint';
 import './Timer.scss';
 import TimeUnit from './TimeUnit/TimeUnit';
-import FingerPrint from '../FingerPrint/FingerPrint';
 
 export interface ITimerProps {
 }
 
 function Timer(props: ITimerProps) {
-    const [item, setItem] = useLocalStorage<number>('useTimeKey')
+    const {
+        store
+    } = useStores();
+
+    const [item, setItem] = useLocalStorage<number>(localStoreKeys.useTimeKey)
     const [timer, setTimer] = useCountDown(new Date(item));
 
 
     React.useEffect(() => {
-        console.log(timer);
-
         setTimer(new Date(item));
     }, [item]);
+
+    React.useEffect(() => {
+        store.time = timer;
+    }, [timer])
+
+    React.useEffect(() => {
+        if (store.time !== timer) {
+            setItem(store.time.date.getTime())
+        } else {
+            store.time = timer;
+        }
+    }, [store.time])
 
     const updateTime = () => {
         const date = Date.now();
@@ -29,11 +45,11 @@ function Timer(props: ITimerProps) {
 
 
     let timerRef = null
-    if (timer && timer.isValid) {
+    if (store.time && store.time.isValid) {
         timerRef = (
             <div className="timer-container">
                 {
-                    toPairs(timer.asObject(false))
+                    toPairs(store.time.asObject(false))
                         .map(([name, time], i) => (
                             <TimeUnit key={`${name}_${i}`} index={i} time={time} />
                         ))

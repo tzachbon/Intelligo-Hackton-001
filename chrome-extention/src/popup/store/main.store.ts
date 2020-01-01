@@ -1,8 +1,14 @@
 import { action, computed, observable } from 'mobx';
+import { CountDate } from '../../utils/react/use-count-down';
 
+
+export const localStoreKeys = {
+    useTimeKey: 'useTimeKey'
+}
 
 export class Store {
     // @observable count = 0
+    @observable time: CountDate;
 
     // @action.bound increment() {
     //     this.count++
