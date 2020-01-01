@@ -1,0 +1,23 @@
+@import "./../../../style.scss";
+
+.finger-print-container {
+  @include flex-center;
+  svg {
+    cursor: pointer;
+
+    &.click {
+      g {
+        path {
+          transition: all 0.3s ease-in-out;
+          stroke: $master-slack;
+        }
+      }
+    }
+
+    g {
+      path {
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}

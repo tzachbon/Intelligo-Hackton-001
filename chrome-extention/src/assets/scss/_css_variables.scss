@@ -1,40 +1,36 @@
-
-$font-title: 'Nunito Sans', sans-serif;
-$font-body: 'Nunito Sans', sans-serif;
-
+$font-title: "Nunito Sans", sans-serif;
+$font-body: "Nunito Sans", sans-serif;
 
 $easing: cubic-bezier(0.645, 0.045, 0.355, 1);
-$easingSmooth: cubic-bezier(.162,.85,.45,1);
-
+$easingSmooth: cubic-bezier(0.162, 0.85, 0.45, 1);
 
 $toggleMenuTransition: 0.3s;
 $modalTransition: 0.2s;
 
+$grey-light: #58595b;
+$grey-dark: #1f2534;
+$green: #59dca8;
+$turquoise: #14a8c0;
+$turquoise-reg: #3b6477;
+$turquoise-dark: #345a71;
+$blue: #12a8c0;
+$purple: #eca8ff;
+$yellow: #ffffa7;
+$red: #ff5779;
 
-$grey-light: #58595B;
-$grey-dark: #1F2534;
-$green: #59DCA8;
-$turquoise: #14A8C0;
-$turquoise-reg: #3B6477;
-$turquoise-dark: #345A71;
-$blue: #12A8C0;
-$purple: #ECA8FF;
-$yellow: #FFFFA7;
-$red: #FF5779;
-
-
+$fontColor: #daf6ff;
+$bgMain: #4d5052;
+$bgSecond: #0a2e38;
 
 $white-strong: rgba(255, 255, 255, 0.7);
 $white-light: rgba(255, 255, 255, 0.5);
 $white-light-mid: rgba(255, 255, 255, 0.3);
 $white-light-washed: rgba(255, 255, 255, 0.1);
 
-
-
-$master-facebook: #324D8F;
-$master-twitter: #0295F3;
-$master-linkedin: #1B85BC;
-$master-trello: #026AA7;
+$master-facebook: #324d8f;
+$master-twitter: #0295f3;
+$master-linkedin: #1b85bc;
+$master-trello: #026aa7;
 $master-medium: #00ab6c;
 $master-gmail: #bb0000;
 $master-gplus: #d34836;
@@ -42,10 +38,9 @@ $master-vimeo: #1ab7ea;
 $master-slack: #3eb991;
 $master-buffer: #323b43;
 $master-pinterest: #bd081c;
-$master-appstore: #3C94EB;
-$master-google-play: #C74665;
+$master-appstore: #3c94eb;
+$master-google-play: #c74665;
 $master-google-blue: #4285f4;
-
 
 $portrait: " all and (orientation: portrait) ";
 $landscape: " all and (orientation: landscape) ";
@@ -69,8 +64,6 @@ $media-higher-than-desktop-small: "only screen and (min-width : 1520px) ";
 $media-desktop: "only screen and (max-width : 2000px) ";
 $media-imac: "only screen and (max-width : 2600px) ";
 
-
 $media-height_high: "only screen and (min-height : 880px) ";
 $media-height_mid: "only screen and (max-height : 710px) ";
 $media-height_small: "only screen and (max-height : 650px) ";
-

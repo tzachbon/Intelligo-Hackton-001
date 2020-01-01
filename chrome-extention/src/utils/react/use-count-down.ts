@@ -10,9 +10,13 @@ export class CountDate {
 
     private difference: number
 
-    constructor(public date: Date) {
+    get isValid() {
+        return !!this.difference;
+    }
+
+    constructor(public date: Date | null) {
         this.now = new Date();
-        this.difference = this.now.getTime() - this.date.getTime();
+        this.difference = date instanceof Date ? (this.now.getTime() - this.date.getTime()) : 0;
         this.setTime(this.difference);
     }
 
@@ -38,7 +42,7 @@ export class CountDate {
         return `${this.days} days ${this.hours} hours ${this.minutes} minutes ${this.seconds} seconds`;
     }
 
-    asObject() {
+    asObject(showDay = true) {
         const {
             days,
             hours,
@@ -46,29 +50,55 @@ export class CountDate {
             seconds
         } = { ...this };
 
-        return {
-            days,
+        const obj = {
             hours,
             minutes,
             seconds
         }
+
+        if (showDay) {
+            Object.assign(obj, { days });
+        }
+
+        return obj
     }
 }
 
 export default function useCountDown(initTime?: Date): [CountDate, (newDate?: Date) => void] {
     initTime = initTime || new Date();
-    const [time, setTime] = useState(new CountDate(initTime));
+    let unMount = false;
+    const [date, setDate] = useState(initTime);
+    const [time, setTime] = useState(new CountDate(date));
+    const [timer, setTimer] = useState(null);
 
-    const setCountDownTime = (newTime?: Date) => setTime(new CountDate(newTime || initTime))
+    const setCountDownTime = (newTime?: Date) => {
+        newTime = newTime || new Date(Date.now());
+        setDate(newTime);
+        if (timer) {
+            clearInterval(timer);
+        }
+    }
+
+    useEffect(() => {
+        setTime(new CountDate(date))
+
+        if (date) {
+            if (timer) {
+                clearInterval(timer)
+            }
+            setTimer(
+                setInterval(() => {
+                    !unMount && setTime(new CountDate(date))
+                }, 1000)
+            )
+        }
+    }, [date])
 
     useEffect(() => {
 
-        let unMount = false;
-        const timer$ = setInterval(() => !unMount && setTime(new CountDate(initTime)), 1000);
-
         return () => {
             unMount = true
-            clearInterval(timer$);
+            clearInterval(timer);
         };
     }, [])
 

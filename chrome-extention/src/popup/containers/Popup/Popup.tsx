@@ -1,12 +1,10 @@
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import { Button, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import { observer, useLocalStore } from 'mobx-react';
 import * as React from 'react';
+import { classNames } from '../../../utils/general.util';
+import Timer from '../Timer/Timer';
+import Login from './../Login/Login';
 import './Popup.scss';
-import { useChromeStorage } from '../../../utils/general.util';
-import useCountDown from '../../../utils/react/use-count-down';
-import { Timer } from '../Timer/Timer';
-
 
 const theme = createMuiTheme({
     palette: {
@@ -44,32 +42,35 @@ const theme = createMuiTheme({
 
 interface AppProps { }
 
-interface AppState { }
-
 const App: React.FC = (props: AppProps) => {
-    const { item, setItem } = useChromeStorage<Date | null>('hackton_use_time')
-    const [time] = useCountDown(item);
 
-    React.useEffect(() => {
-        if (!(item instanceof Date)) {
-            setItem(new Date())
-        }
 
-    }, [item]);
+    const store = useLocalStore(() => ({
+        isLogin: false
+    }))
 
-    React.useEffect(() => {
-        console.log(time)
-    }, [time])
+    const mainClasses = classNames('popupContainer', {
+        'with-login': !store.isLogin
+    })
+
+
+    const onLogin = () => {
+        store.isLogin = !store.isLogin
+    }
+
 
 
     return (
         <MuiThemeProvider theme={theme}>
-            <div className="popupContainer" >
+            <div className={mainClasses} >
                 {
-                    item && (
-                        <Timer time={time} />
-                    )
+                    store.isLogin ? (
+                        <Timer />
+                    ) : (
+                            <Login></Login>
+                        )
                 }
+                <Button onClick={onLogin}>{!store.isLogin ? 'Login' : 'Logout'}</Button>
             </div>
         </MuiThemeProvider>
     )

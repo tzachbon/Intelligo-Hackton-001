@@ -1,0 +1,17 @@
+@import "./../../../style.scss";
+
+.timer-container {
+  width: 100%;
+  text-align: center;
+  color: $fontColor;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+  width: 100%;
+  font-family: "Teko", sans-serif;
+  align-content: center;
+  font-size: 8rem;
+  color: white;
+  display: inline-block;
+
+  .time-unit {
+  }
+}
