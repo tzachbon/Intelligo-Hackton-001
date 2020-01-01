@@ -1,0 +1,4 @@
+node_modules
+package-lock
+chrome-extention/node_modules
+chrome-extention/package-lock

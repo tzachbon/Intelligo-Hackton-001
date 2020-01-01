@@ -3,6 +3,9 @@ import Typography from '@material-ui/core/Typography';
 import { observer, useLocalStore } from 'mobx-react';
 import * as React from 'react';
 import './Popup.scss';
+import { useChromeStorage } from '../../../utils/general.util';
+import useCountDown from '../../../utils/react/use-count-down';
+import { Timer } from '../Timer/Timer';
 
 
 const theme = createMuiTheme({
@@ -44,15 +47,29 @@ interface AppProps { }
 interface AppState { }
 
 const App: React.FC = (props: AppProps) => {
-    const state = useLocalStore(() => ({}));
+    const { item, setItem } = useChromeStorage<Date | null>('hackton_use_time')
+    const [time] = useCountDown(item);
+
+    React.useEffect(() => {
+        if (!(item instanceof Date)) {
+            setItem(new Date())
+        }
+
+    }, [item]);
+
+    React.useEffect(() => {
+        console.log(time)
+    }, [time])
 
 
     return (
         <MuiThemeProvider theme={theme}>
             <div className="popupContainer" >
-                <Typography variant="h3" className='flex-center t-center'  gutterBottom>
-                    Hello World!
-                </Typography>
+                {
+                    item && (
+                        <Timer time={time} />
+                    )
+                }
             </div>
         </MuiThemeProvider>
     )
