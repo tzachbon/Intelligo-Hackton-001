@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Chrome, ChromeListener } from '../../models/chrome.model';
 import { Callback } from '../../models/general.model'
+import { remove } from 'mobx';
 
 
-export function useLocalStorage<T = any>(key: string, initialValue?: T): [T, (value: T) => void] {
+export function useLocalStorage<T = any>(key: string, initialValue?: T): [T, (value: T) => void, () => void] {
     // State to store our value
     // Pass initial state function to useState so logic is only executed once
     const [storedValue, setStoredValue] = useState(() => {
@@ -37,7 +38,16 @@ export function useLocalStorage<T = any>(key: string, initialValue?: T): [T, (va
         }
     };
 
-    return [storedValue, setValue];
+    const removeUser = () => {
+        try {
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.log(e);
+
+        }
+    }
+
+    return [storedValue, setValue, removeUser];
 }
 
 export const useChromeStorage = <T = any>(key: string) => {

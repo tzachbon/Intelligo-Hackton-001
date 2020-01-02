@@ -14,12 +14,16 @@
     "storage",
     "tabs",
     "webRequest",
+    "identity",
     "webRequestBlocking",
     "*://*/*"
   ],
   "manifest_version": 2,
   "background": {
-    "scripts": ["js/popup.js"],
+    "scripts": [
+      "js/popup.js",
+      "https://www.googletagmanager.com/gtag/js?l=dataLayer"
+    ],
     "persistent": true
   },
   "browser_action": {

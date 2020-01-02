@@ -8,30 +8,41 @@ import { localStoreKeys } from '../../store/main.store';
 import FingerPrint from '../FingerPrint/FingerPrint';
 import './Timer.scss';
 import TimeUnit from './TimeUnit/TimeUnit';
+import { Button } from '@material-ui/core';
 
 export interface ITimerProps {
 }
 
 function Timer(props: ITimerProps) {
     const {
+        auth,
         store
     } = useStores();
 
-    const [item, setItem] = useLocalStorage<number>(localStoreKeys.useTimeKey)
-    const [timer, setTimer] = useCountDown(new Date(item));
+    const [timer, setTimer] = useCountDown(store ?.time ?.date ?? null);
 
+    function setItem(date: number) {
+        auth.updateUserTime(date)
+            .then(res => {
+                setTimer(new Date(date))
+            })
+            .catch(err => {
+                console.log(err);
+
+            })
+    }
 
     React.useEffect(() => {
-        setTimer(new Date(item));
-    }, [item]);
-
-    React.useEffect(() => {
-        store.time = timer;
+        if (timer && timer.date) {
+            store.time = timer;
+        } else {
+            store.time = null
+        }
     }, [timer])
 
     React.useEffect(() => {
         if (store.time !== timer) {
-            setItem(store.time.date.getTime())
+            setItem(store ?.time ?.date ?.getTime())
         } else {
             store.time = timer;
         }
@@ -40,6 +51,13 @@ function Timer(props: ITimerProps) {
     const updateTime = () => {
         const date = Date.now();
         setItem(date)
+    }
+
+    const onFinish = () => {
+        auth.setFinished()
+            .then(res => {
+                setTimer(null)
+            })
     }
 
 
@@ -59,9 +77,18 @@ function Timer(props: ITimerProps) {
     }
 
     return (
-        <div className='timer-container flex-center t-center'>
-            {timerRef || <FingerPrint updateTime={updateTime} />}
-        </div>
+        <>
+            <div className='timer-container flex-center t-center'>
+                {timerRef || <FingerPrint updateTime={updateTime} />}
+            </div>
+            {
+                !!timerRef && (
+                    <div className="button-container">
+                        <Button onClick={onFinish}>Finish</Button>
+                    </div>
+                )
+            }
+        </>
     );
 }
 

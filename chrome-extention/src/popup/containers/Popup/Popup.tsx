@@ -7,6 +7,9 @@ import Login from './../Login/Login';
 import './Popup.scss';
 import { useStores } from '../../store/context.store';
 import { localStoreKeys } from '../../store/main.store';
+import * as firebase from 'firebase';
+
+
 
 const theme = createMuiTheme({
     palette: {
@@ -47,7 +50,8 @@ interface AppProps { }
 const App: React.FC = (props: AppProps) => {
 
     const {
-        store
+        store,
+        auth
     } = useStores();
 
     const localStore = useLocalStore(() => ({
@@ -58,14 +62,33 @@ const App: React.FC = (props: AppProps) => {
         'with-login': !localStore.isLogin
     })
 
+    React.useEffect(() => {
 
-    const onLogin = () => {
-        localStore.isLogin = !localStore.isLogin
-        if (!localStore.isLogin) {
-            store.time = null;
-            localStorage.removeItem(localStoreKeys.useTimeKey);
+        if (auth.user) {
+            auth.getUserTime()
+                .then((time) => {
+                    debugger;
+                    if (time.isFinished) {
+                        store.time = null;
+                    } else {
+                        console.log(time.start);
+
+                        store.time = store.convertTime(time ?.start);
+                    }
+                    localStore.isLogin = !!auth.user;
+                })
+                .catch(err => {
+                    store.time = null;
+                    localStore.isLogin = !!auth.user;
+                    console.log(err);
+
+                })
+        } else {
+            localStore.isLogin = !!auth.user;
         }
-    }
+
+
+    }, [auth.user])
 
     return (
         <MuiThemeProvider theme={theme}>
@@ -77,9 +100,6 @@ const App: React.FC = (props: AppProps) => {
                             <Login></Login>
                         )
                 }
-                <div className="buttons-container">
-                    <Button onClick={onLogin}>{!localStore.isLogin ? 'Login' : 'Logout'}</Button>
-                </div>
             </div>
         </MuiThemeProvider>
     )

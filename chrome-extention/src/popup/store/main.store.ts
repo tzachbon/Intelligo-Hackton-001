@@ -10,6 +10,11 @@ export class Store {
     // @observable count = 0
     @observable time: CountDate;
 
+    @action
+    convertTime(date: number) {
+        return new CountDate(new Date(date));
+    }
+
     // @action.bound increment() {
     //     this.count++
     // }

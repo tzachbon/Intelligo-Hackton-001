@@ -65,17 +65,16 @@ export class CountDate {
     }
 }
 
-export default function useCountDown(initTime?: Date): [CountDate, (newDate?: Date) => void] {
-    initTime = initTime || new Date();
+export default function useCountDown(initTime: Date): [CountDate, (newDate?: Date) => void] {
+    initTime;
     let unMount = false;
     const [date, setDate] = useState(initTime);
     const [time, setTime] = useState(new CountDate(date));
     const [timer, setTimer] = useState(null);
 
-    const setCountDownTime = (newTime?: Date) => {
-        newTime = newTime || new Date(Date.now());
+    const setCountDownTime = (newTime?: Date | null) => {
         setDate(newTime);
-        if (timer) {
+        if (timer || !newTime) {
             clearInterval(timer);
         }
     }

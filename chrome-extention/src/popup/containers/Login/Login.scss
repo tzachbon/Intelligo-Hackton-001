@@ -1,0 +1,14 @@
+@import "./../../../style.scss";
+
+form {
+  @include flex-column;
+  width: 80%;
+  .error-msg {
+    text-align: center;
+    color: salmon;
+  }
+
+  &.withSpinner {
+    @include flex-center;
+  }
+}
