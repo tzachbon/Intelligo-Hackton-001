@@ -20,10 +20,7 @@
   ],
   "manifest_version": 2,
   "background": {
-    "scripts": [
-      "js/popup.js",
-      "https://www.googletagmanager.com/gtag/js?l=dataLayer"
-    ],
+    "scripts": ["js/popup.js"],
     "persistent": true
   },
   "browser_action": {
