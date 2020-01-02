@@ -8,6 +8,7 @@ body {
 
 .popupContainer {
   @include flex-column;
+  position: relative;
   align-items: center;
   background: $bgMain;
   background: radial-gradient(ellipse at center, $bgSecond 0%, #000000 70%);
@@ -16,7 +17,24 @@ body {
   justify-content: center;
   transition: all 0.15s ease-in-out;
 
+  .logo {
+    @include flex-center;
+    flex-direction: row;
+    width: 100%;
+    color: white;
+    margin: 2rem 0;
+    .title {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .logout-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
   &.with-login {
-    height: 40rem;
+    height: 35rem;
   }
 }

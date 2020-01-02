@@ -1,14 +1,13 @@
-import { Button, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme, IconButton, MuiThemeProvider } from '@material-ui/core';
 import { observer, useLocalStore } from 'mobx-react';
 import * as React from 'react';
 import { classNames } from '../../../utils/general.util';
+import { useStores } from '../../store/context.store';
 import Timer from '../Timer/Timer';
 import Login from './../Login/Login';
 import './Popup.scss';
-import { useStores } from '../../store/context.store';
-import { localStoreKeys } from '../../store/main.store';
-import * as firebase from 'firebase';
-
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
 
 const theme = createMuiTheme({
@@ -67,7 +66,6 @@ const App: React.FC = (props: AppProps) => {
         if (auth.user) {
             auth.getUserTime()
                 .then((time) => {
-                    debugger;
                     if (time.isFinished) {
                         store.time = null;
                     } else {
@@ -90,15 +88,33 @@ const App: React.FC = (props: AppProps) => {
 
     }, [auth.user])
 
+    const onSignOut = () => {
+        localStorage.removeItem('user');
+        auth.user = null;
+    }
+
     return (
         <MuiThemeProvider theme={theme}>
             <div className={mainClasses} >
+                <div className="logo">
+                    <QueryBuilderIcon />
+                    <span className="title">
+                        Time Machine
+                    </span>
+                </div>
                 {
                     localStore.isLogin ? (
                         <Timer />
                     ) : (
                             <Login></Login>
                         )
+                }
+                {
+                    !!auth.user && (
+                        <IconButton onClick={onSignOut} className="logout-button">
+                            <MeetingRoomIcon></MeetingRoomIcon>
+                        </IconButton>
+                    )
                 }
             </div>
         </MuiThemeProvider>
