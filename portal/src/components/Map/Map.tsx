@@ -73,27 +73,47 @@ const Map: React.FC<MapProps> = props => {
     useEffect(() => {
         if (time) {
             store.time = time;
-
             if (store.dates.length) {
-
                 const lastDate = store.dates[store.dates.length - 1];
+                if (lastDate.isFinished) {
+                    store.dates.push({
+                        start: Date.now(),
+                        isFinished: false,
+                        end: null
+                    })
 
-                if (!lastDate.isFinished) {
-                    lastDate.start = Date.now();
-                    store.dates[store.dates.length - 1] = lastDate;
+                    firebase
+                        .firestore()
+                        .collection('user-time')
+                        .doc(`${(store && store.user && store.user.uid) || ''}`)
+                        .set({
+                            dates: store.dates
+                        })
+                        .then(res => {
+                            console.log(res);
+                        })
                 }
-
-                firebase
-                    .firestore()
-                    .collection('user-time')
-                    .doc(`${(store && store.user && store.user.uid) || ''}`)
-                    .set({
-                        dates: store.dates
-                    })
-                    .then(res => {
-                        console.log(res);
-                    })
             }
+
+            // if () {
+
+
+            //     if (!lastDate.isFinished) {
+            //         lastDate.start = Date.now();
+            //         store.dates[store.dates.length - 1] = lastDate;
+            //     }
+
+            //     firebase
+            //         .firestore()
+            //         .collection('user-time')
+            //         .doc(`${(store && store.user && store.user.uid) || ''}`)
+            //         .set({
+            //             dates: store.dates
+            //         })
+            //         .then(res => {
+            //             console.log(res);
+            //         })
+            // }
         }
     }, [time])
 
@@ -131,11 +151,6 @@ const Map: React.FC<MapProps> = props => {
                     ) : (
                             <FingerPrint style={pointStyle} updateTime={() => {
                                 const now = Date.now()
-                                store.dates.push({
-                                    start: now,
-                                    isFinished: false,
-                                    end: null
-                                })
                                 setTime(new Date(now))
                             }}></FingerPrint>
                         )
