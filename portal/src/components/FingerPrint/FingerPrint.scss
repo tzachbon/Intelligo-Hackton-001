@@ -1,0 +1,73 @@
+@import "./../../App.scss";
+
+.finger-print-container {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @include flex-center;
+  margin: 1rem 0;
+
+  .radar {
+  }
+
+  svg {
+    cursor: pointer;
+    background: $bgMain;
+    border-radius: 50%;
+    padding: 2rem;
+    cursor: pointer;
+    -webkit-animation: r5 1s 0s ease-out infinite;
+    -moz-animation: r5 1s 0s ease-out infinite;
+    animation: r5 1s 0s ease-out infinite;
+
+    &.click {
+      g {
+        path {
+          transition: all 0.3s ease-in-out;
+          stroke: $master-slack;
+        }
+      }
+    }
+
+    g {
+      path {
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
+@-webkit-keyframes r5 {
+  0% {
+    box-shadow: 0 0 8px 6px rgba(#ccc, 0.5), 0 0 0px 0px transparent, 0 0 0px 0px rgba(#ccc, 0.7);
+  }
+  10% {
+    transform: scale(1, 1);
+    box-shadow: 0 0 8px 6px rgba(#ccc, 0.5), 0 0 12px 10px transparent, 0 0 12px 14px rgba(#ccc, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 8px 6px rgba(26, 140, 255, 0), 0 0 0px 40px transparent, 0 0 0px 40px rgba(26, 140, 255, 0);
+  }
+}
+@-moz-keyframes r5 {
+  0% {
+    box-shadow: 0 0 8px 6px #ccc, 0 0 0px 0px transparent, 0 0 0px 0px #ccc;
+  }
+  10% {
+    box-shadow: 0 0 8px 6px #ccc, 0 0 12px 10px transparent, 0 0 12px 14px #ccc;
+  }
+  100% {
+    box-shadow: 0 0 8px 6px rgba(26, 140, 255, 0), 0 0 0px 40px transparent, 0 0 0px 40px rgba(26, 140, 255, 0);
+  }
+}
+@keyframes r5 {
+  0% {
+    box-shadow: 0 0 8px 6px #ccc, 0 0 0px 0px transparent, 0 0 0px 0px #ccc;
+  }
+  10% {
+    box-shadow: 0 0 8px 6px #ccc, 0 0 12px 10px transparent, 0 0 12px 14px #ccc;
+  }
+  100% {
+    box-shadow: 0 0 8px 6px rgba(26, 140, 255, 0), 0 0 0px 40px transparent, 0 0 0px 40px rgba(26, 140, 255, 0);
+  }
+}

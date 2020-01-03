@@ -1,0 +1,35 @@
+@import "./../../App.scss";
+
+.counter-container {
+  @include flex-center;
+  flex-direction: column;
+  @include box-shadow-3;
+  top: 50%;
+  left: 50;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  width: 45rem;
+  height: 15rem;
+  font-family: "Teko", sans-serif;
+  background: darken($bgMain, 20);
+  border-radius: 1rem;
+  color: $fontColor;
+  font-size: 8rem;
+  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+  transition: all 0.15s ease-in-out;
+  .counter {
+    @include flex-row;
+    margin-top: 1rem;
+    max-height: 9rem;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 550px) {
+  .counter-container {
+    width: 90vw;
+  }
+}
