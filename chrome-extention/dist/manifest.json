@@ -1,5 +1,5 @@
 {
-  "name": "Use Time",
+  "name": "Time Machine",
   "author": "Tzach Bonfil",
   "version": "1.0.0",
   "icons": {
@@ -24,7 +24,7 @@
     "persistent": true
   },
   "browser_action": {
-    "default_title": "Kidsafe",
+    "default_title": "Time Machine",
     "default_icon": "icon48.png",
     "default_popup": "popup.html"
   },
