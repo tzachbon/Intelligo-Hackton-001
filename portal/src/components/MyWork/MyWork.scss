@@ -18,7 +18,7 @@
     color: black;
     @include flex-row;
     flex: 1;
-    padding: 0 1rem;
+    padding: 1rem 2rem;
     font-family: "Roboto", sans-serif;
     &.header {
       position: sticky;
@@ -36,8 +36,19 @@
   }
 }
 
+.add-manually {
+  position: fixed !important;
+  bottom: 5%;
+  right: 5%;
+}
+
+.MuiDialog-paperWidthSm {
+  padding: 1rem;
+}
+
 @media (max-width: 550px) {
   .my-work-container {
+    padding: 0.5 1.5rem;
     width: 92vw;
   }
 }
