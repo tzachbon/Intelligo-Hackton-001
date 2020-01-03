@@ -11,6 +11,7 @@ export class Store {
     @observable time: any;
     @observable loading = true;
     @observable init = true;
+    @observable canCreateCount = true;
 
     @action
     toggleSideBar(state?: boolean) {

@@ -53,16 +53,11 @@ const Map: React.FC<MapProps> = props => {
             .then(res => {
                 store.dates = (res.data() as any).dates as any[];
 
-                if (!store.init) {
-                    return;
-                } else {
-                    store.init = false;
-                }
-
                 const lastDate = store.dates[store.dates.length - 1];
 
                 if (lastDate && lastDate.isFinished) {
                     store.date = null
+
                 } else {
                     store.date = lastDate;
                     setTime(new Date(store.date.start))
@@ -71,11 +66,12 @@ const Map: React.FC<MapProps> = props => {
     }, [])
 
     useEffect(() => {
+
         if (time) {
             store.time = time;
             if (store.dates.length) {
                 const lastDate = store.dates[store.dates.length - 1];
-                if (lastDate.isFinished) {
+                if (lastDate.isFinished && store.canCreateCount) {
                     store.dates.push({
                         start: Date.now(),
                         isFinished: false,
@@ -94,26 +90,6 @@ const Map: React.FC<MapProps> = props => {
                         })
                 }
             }
-
-            // if () {
-
-
-            //     if (!lastDate.isFinished) {
-            //         lastDate.start = Date.now();
-            //         store.dates[store.dates.length - 1] = lastDate;
-            //     }
-
-            //     firebase
-            //         .firestore()
-            //         .collection('user-time')
-            //         .doc(`${(store && store.user && store.user.uid) || ''}`)
-            //         .set({
-            //             dates: store.dates
-            //         })
-            //         .then(res => {
-            //             console.log(res);
-            //         })
-            // }
         }
     }, [time])
 
@@ -150,6 +126,7 @@ const Map: React.FC<MapProps> = props => {
                         <CountTime></CountTime>
                     ) : (
                             <FingerPrint style={pointStyle} updateTime={() => {
+                                store.canCreateCount = true;
                                 const now = Date.now()
                                 setTime(new Date(now))
                             }}></FingerPrint>

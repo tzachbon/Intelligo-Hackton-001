@@ -1,0 +1,43 @@
+@import "./../../App.scss";
+
+.my-work-container {
+  @include abs-center;
+  @include flex-column;
+  @include box-shadow-3;
+  width: 50vw;
+  height: 70vh;
+  max-height: 70vh;
+  background: white;
+  border-radius: 0.5rem;
+
+  .row-container {
+    overflow: auto;
+  }
+
+  .row {
+    color: black;
+    @include flex-row;
+    flex: 1;
+    padding: 0 1rem;
+    font-family: "Roboto", sans-serif;
+    &.header {
+      position: sticky;
+      height: 7rem;
+      border-bottom: 1px solid #ccc;
+    }
+
+    &.odd {
+      background: #eee;
+    }
+    span {
+      flex: 1;
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .my-work-container {
+    width: 92vw;
+  }
+}

@@ -15,13 +15,23 @@ const App: React.FC = () => {
   const { store } = useStores();
 
   useEffect(() => {
+    let unmount = false;
+
     firebase
       .auth()
       .signInWithEmailAndPassword('test@test.com', 'test1234')
       .then(res => {
-        store.user = res.user;
-        store.loading = false;
+        if (!unmount) {
+          store.user = res.user;
+          store.loading = false;
+
+
+        }
       })
+
+    return () => {
+      unmount = true;
+    }
   }, [])
 
 

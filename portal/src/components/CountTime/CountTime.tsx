@@ -5,6 +5,7 @@ import { CountDate } from '../../utils/use-count-down';
 import { toPairs } from 'lodash';
 import './CountTime.scss';
 import { Button } from '@material-ui/core';
+import { useEffect } from 'react';
 
 interface ICountTimeProps {
 }
@@ -23,7 +24,12 @@ const CountTime: React.FunctionComponent<ICountTimeProps> = (props) => {
         lastDate.end = Date.now();
         store.dates[store.dates.length - 1] = lastDate;
         store.time = null
+        // store.canCreateCount = true;
     }
+
+    useEffect(() => {
+        store.canCreateCount = false;
+    }, [])
 
 
     return (
